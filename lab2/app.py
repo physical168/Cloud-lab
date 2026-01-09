@@ -8,9 +8,10 @@ def integrate(lower, upper, N):
     s = sum(abs(math.sin(lower + i * h)) * h for i in range(N))
     return s
 
-# 这里的路由去掉了 float: 限制，手动在函数内转换，防止 404
+# 移除 <float:...> 限制，改用通用的字符串匹配
 @app.route('/integral/<lower>/<upper>')
 def get_integral(lower, upper):
+    # 手动进行类型转换
     low = float(lower)
     up = float(upper)
     n_values = [10, 100, 1000, 10000, 100000, 1000000]
