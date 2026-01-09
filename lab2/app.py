@@ -8,10 +8,13 @@ def integrate(lower, upper, N):
     s = sum(abs(math.sin(lower + i * h)) * h for i in range(N))
     return s
 
-@app.route('/integral/<float:lower>/<float:upper>')
+# 这里的路由去掉了 float: 限制，手动在函数内转换，防止 404
+@app.route('/integral/<lower>/<upper>')
 def get_integral(lower, upper):
+    low = float(lower)
+    up = float(upper)
     n_values = [10, 100, 1000, 10000, 100000, 1000000]
-    results = [f"N={n}: {integrate(lower, upper, n)}" for n in n_values]
+    results = [f"N={n}: {integrate(low, up, n)}" for n in n_values]
     return "<br>".join(results)
 
 if __name__ == '__main__':
